@@ -37,6 +37,43 @@
     empty-cells: show;
 }
 
+.shopTable {
+    position: fixed;
+    bottom: 10;
+    left: 10;
+    border-collapse: collapse;
+    border: 1px solid white;
+    background-color: burlywood;
+    width: 250px;
+    height: 300px;
+    empty-cells: show;
+}
+
+.shopMenu {
+    width: 70;
+    position: fixed;
+    left: 25%;
+    top: 50%;
+    opacity: 0.8;
+}
+
+.shopMenu a {
+    background-color: #eee;
+    color: black;
+    display: block;
+    padding: 12px;
+    text-decoration: none;
+}
+
+.shopMenu a:hover {
+    background-color: #ccc;
+}
+
+.shopMenu a.active {
+    background-color: grey;
+    color: white;
+}
+
 div {
     width: 100%;
     height: 100%;
@@ -52,12 +89,16 @@ div {
     position: fixed;
     left: 30%;
     width: 800px;
-    top: 300;
+    top: 30%;
 }
 
 #bag td, th {
   border: 1px solid white;
 }
+
+#shop td, th {
+    border: 1px solid white;
+  }
 
 .movementButton {
     width: 60px;
@@ -67,22 +108,22 @@ div {
 
 #northButton {
     left: 50%;
-    bottom: 155;
+    bottom: 15%;
 }
 
 #westButton {
     left: 46%;
-    bottom: 85;
+    bottom: 7%;
 }
 
 #eastButton {
     left: 54%;
-    bottom: 85;
+    bottom: 7%;
 }
 
 #southButton {
     left: 50%;
-    bottom: 85;
+    bottom: 7%;
 }
 
 #showhidebag {
