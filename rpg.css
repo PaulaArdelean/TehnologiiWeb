@@ -1,0 +1,102 @@
+#createCharacterDiv {
+    text-align: center;
+    background-image: url(forest.jpg);
+    background-size: 100% 100%;
+}
+
+#playDiv {
+    background-image: url(forest.jpg);
+    background-size: 100% 100%;
+    
+}
+
+#charDivPosition {
+    position: fixed;
+    top: 300;
+}
+
+.width {
+    width: 250;
+    height: 30;
+}
+
+.textStyleCharDiv {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 19;
+}
+
+.bagTable {    
+    position: fixed;
+    bottom: 10;
+    right: 10;
+    border-collapse: collapse;
+    border: 1px solid white;
+    background-color: burlywood;
+    width: 200px;
+    height: 200px;
+    empty-cells: show;
+}
+
+div {
+    width: 100%;
+    height: 100%;
+}
+
+.gameTextStyle {
+    background-color: white;
+    opacity: 0.5;
+    color: black;
+    font-size: 19;
+    font-weight: bold;  
+    text-align: left;   
+    position: fixed;
+    left: 30%;
+    width: 800px;
+    top: 300;
+}
+
+#bag td, th {
+  border: 1px solid white;
+}
+
+.movementButton {
+    width: 60px;
+    height: 60px;
+    position: fixed;
+}
+
+#northButton {
+    left: 50%;
+    bottom: 155;
+}
+
+#westButton {
+    left: 46%;
+    bottom: 85;
+}
+
+#eastButton {
+    left: 54%;
+    bottom: 85;
+}
+
+#southButton {
+    left: 50%;
+    bottom: 85;
+}
+
+#showhidebag {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15;
+    position: fixed;
+    width: 100px;
+    height: 30px;
+    bottom: 215;
+    right: 10;
+    border: 1px solid black;
+}
+
+#playDiv p {
+    color: aliceblue;
+    font-size: 19;
+}
