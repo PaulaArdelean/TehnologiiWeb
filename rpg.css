@@ -90,6 +90,7 @@ div {
     left: 30%;
     width: 800px;
     top: 30%;
+    resize: none;
 }
 
 #bag td, th {

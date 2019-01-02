@@ -113,13 +113,38 @@ function goToGame() {
         displayCharDamage.innerHTML = Character.damage;
         let displayCharGold = document.getElementById('displayCharGold');
         displayCharGold.innerHTML = Character.gold  ;
+        document.getElementById('textarea').innerHTML += 'Ai intrat intr-o padure.....\n';
     } else {
         alert('Name, class or race not set.');
     }
 }
 
-function createText() {
-    
+function createDirectionText(direction) {
+    let rowNumber = 17;
+    var directionText = document.getElementById('textarea').value.split("\n");
+    directionText.pop();
+    let i = document.getElementById('textarea').value.split("\n").length-1;
+    console.log('direction text is' ,directionText);
+    console.log('I is',i);
+    if(i < rowNumber) {
+        document.getElementById('textarea').innerHTML += 'You went ' + direction + '\n';
+    } else {
+        console.log('direction text b4 shift',directionText);
+        directionText.shift();
+        console.log('direction text after shift',directionText);
+        i--;
+        directionText[i] = 'You went ' + direction  + '\n';
+        var text = '';
+        for(var j = 0; j < directionText.length; j++) {
+            if(j !== directionText.length-1)
+                text += directionText[j]+'\n';
+            else
+                text += directionText[j];
+        }
+        console.log('Textul este:');
+        console.log(text);
+        document.getElementById('textarea').innerHTML = text;
+    }
 }
 
 function showBag() {

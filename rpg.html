@@ -32,12 +32,12 @@
         <p>Damage: <span id="displayCharDamage"></span></p>
         <p>Gold: <span id="displayCharGold"></span></p>
         <!-- Joc -->
-        <textarea rows="18" class="gameTextStyle">Ai intrat intr-o padure.....</textarea>
+        <textarea id="textarea" rows="18" class="gameTextStyle" readonly></textarea>
         <!-- Butoane de miscare -->
-        <button class="movementButton" id="northButton">North</button>
-        <button class="movementButton" id="southButton">South</button>
-        <button class="movementButton" id="westButton">West</button>
-        <button class="movementButton" id="eastButton">East</button>
+        <button class="movementButton" id="northButton" onclick="createDirectionText('north.')">North</button>
+        <button class="movementButton" id="southButton" onclick="createDirectionText('south.')">South</button>
+        <button class="movementButton" id="westButton" onclick="createDirectionText('west.')">West</button>
+        <button class="movementButton" id="eastButton" onclick="createDirectionText('east.')">East</button>
         <!-- Pentru bag -->
         <button id="showhidebag" onclick="showBag()">Show bag</button>
         <table id="bag" class="bagTable">
