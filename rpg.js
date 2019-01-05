@@ -2,13 +2,13 @@ var Character = {
     characterName: '',
     characterClass: {
         className: '',
-        classHP: 0,
+        classHp: 0,
         classArmour: 0,
         classDamage: 0
     },
     characterRace: {
         raceName: '',
-        baseHP: 0,
+        baseHp: 0,
         baseArmour: 0,
         baseDamage: 0
     },
@@ -22,14 +22,35 @@ var Character = {
     maxXp: 0
 };
 
-var Enemy = {
-    name: '',
-    hp: 0,
-    armour: 0,
-    baseDamage: 0,
-    valueInGold: 0,
-    valueInXP: 0
-};
+var Enemies = [
+    {
+        name: 'skeleton',
+        hp: 20,
+        maxHp: 20,
+        armour: 5,
+        damage: 7,
+        valueInGold: 25,
+        valueInXp: 50
+    },
+    {
+        name: 'zombie',
+        hp: 25,
+        maxHp: 25,
+        armour: 0,
+        damage: 5,
+        valueInGold: 50,
+        valueInXp: 25
+    },
+    {
+        name: 'ogre',
+        hp: 50,
+        maxHp: 50,
+        armour: 15,
+        damage: 15,
+        valueInGold: 100,
+        valueInXp: 100
+    }
+];
 
 var Item = {
     name: '',
@@ -53,34 +74,34 @@ function getCharacterData() {
         Character.characterName = characterName;
         if(characterClass === 'mage') {
             Character.characterClass.className = 'Mage';
-            Character.characterClass.classHP = 40;
+            Character.characterClass.classHp = 40;
             Character.characterClass.classDamage = 20;
             Character.characterClass.classArmour = 5;
         } else if (characterClass === 'priest') {
             Character.characterClass.className = 'Priest';
-            Character.characterClass.classHP = 50;
+            Character.characterClass.classHp = 50;
             Character.characterClass.classDamage = 15
             Character.characterClass.classArmour = 10;
         }
         if (characterRace === 'human') {
             Character.characterRace.raceName = 'Human';
-            Character.characterRace.baseHP = 50;
+            Character.characterRace.baseHp = 50;
             Character.characterRace.baseDamage = 10;
             Character.characterRace.baseArmour = 5;
         } else if (characterRace === 'bloodelf') {
             Character.characterRace.raceName = 'Blood elf';
-            Character.characterRace.baseHP = 40;
+            Character.characterRace.baseHp = 40;
             Character.characterRace.baseDamage = 20;
             Character.characterRace.baseArmour = 0;
         }
         Character.armour = Character.characterClass.classArmour + Character.characterRace.baseArmour;
-        Character.maxHp = Character.characterClass.classHP + Character.characterRace.baseHP;
+        Character.maxHp = Character.characterClass.classHp + Character.characterRace.baseHp;
         Character.currentHp = Character.maxHp;
         Character.damage = Character.characterClass.classDamage + Character.characterRace.baseDamage;
         Character.gold = 100;
         Character.level = 1;
-        Character.currentXP = 0;
-        Character.maxXP = 100;
+        Character.currentXp = 0;
+        Character.maxXp = 100;
         return true;
     }
     return false;
@@ -119,32 +140,109 @@ function goToGame() {
     }
 }
 
-function createDirectionText(direction) {
-    let rowNumber = 17;
-    var directionText = document.getElementById('textarea').value.split("\n");
-    directionText.pop();
-    let i = document.getElementById('textarea').value.split("\n").length-1;
-    console.log('direction text is' ,directionText);
-    console.log('I is',i);
-    if(i < rowNumber) {
-        document.getElementById('textarea').innerHTML += 'You went ' + direction + '\n';
-    } else {
-        console.log('direction text b4 shift',directionText);
-        directionText.shift();
-        console.log('direction text after shift',directionText);
-        i--;
-        directionText[i] = 'You went ' + direction  + '\n';
-        var text = '';
-        for(var j = 0; j < directionText.length; j++) {
-            if(j !== directionText.length-1)
-                text += directionText[j]+'\n';
-            else
-                text += directionText[j];
-        }
-        console.log('Textul este:');
-        console.log(text);
-        document.getElementById('textarea').innerHTML = text;
+function refreshDisplay() {
+    let displayCharMaxHp = document.getElementById('displayCharMaxHp');
+    displayCharMaxHp.innerHTML = Character.maxHp;
+    let displayCharCurrentHp = document.getElementById('displayCharCurrentHp');
+    displayCharCurrentHp.innerHTML = Character.currentHp;
+    let displayCharMaxXp = document.getElementById('displayCharMaxXp');
+    displayCharMaxXp.innerHTML = Character.maxXp;
+    let displayCharCurrentXp = document.getElementById('displayCharCurrentXp');
+    displayCharCurrentXp.innerHTML = Character.currentXp;
+    let displayCharLevel = document.getElementById('displayCharLevel');
+    displayCharLevel.innerHTML = Character.level;
+    let displayCharGold = document.getElementById('displayCharGold');
+    displayCharGold.innerHTML = Character.gold  ;
+    let displayCharDamage = document.getElementById('displayCharDamage');
+    displayCharDamage.innerHTML = Character.damage;
+}
+
+function getRndInteger(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) ) + min;
+}
+
+function movement(direction) {
+    addToTextarea('You went ' + direction);
+    if(isCombat()) {
+        let enemy = Enemies[getRndInteger(0, 2)]
+        addToTextarea('You encountered a ' + enemy.name + '.');
+        combat(enemy);
     }
+    if(isShop()) {
+        addToTextarea('You found a shop.');
+    }
+}
+
+function combat(enemy) {
+    while(Character.currentHp > 0 && enemy.hp > 0) {
+        if(enemy.damage > Character.armour) {
+            Character.currentHp -= (enemy.damage - Character.armour);
+        }
+        if(Character.damage > enemy.armour) {
+            enemy.hp  -= (Character.damage - enemy.armour);
+        }
+    }
+    if(Character.currentHp <= 0) {
+        addToTextarea('You died.');
+    } else if(enemy.hp <= 0) {
+        Character.gold += enemy.valueInGold;
+        if(Character.currentXp + enemy.valueInXp < Character.maxXp) {
+            Character.currentXp += enemy.valueInXp;
+        } else { // BUG: se dubleaza maxXp inainte sa ajung la fostul maxXp
+            Character.level++;
+            Character.maxXp *= 2;
+            Character.damage += 5;
+            Character.currentHp += 10;
+            Character.maxHp += 10;
+            for(let nr = 0; nr <= 2; nr++) {
+                Enemies[nr].damage += 3;
+                Enemies[nr].hp += 5;
+                Enemies[nr].maxHp += 5;
+                Enemies[nr].valueInGold += 5;
+                Enemies[nr].valueInXp += 10;
+            }
+            currentXp = Character.currentXp + enemy.valueInXp - Character.maxXp;
+        }
+        refreshDisplay();
+        addToTextarea('You won the battle.');
+    }
+    enemy.hp = enemy.maxHp;
+}
+
+function addToTextarea(s) {
+    let rowNumber = 17;
+    let text = '';
+    var lines = document.getElementById('textarea').value.split('\n');
+    lines.pop();
+    let i = document.getElementById('textarea').value.split('\n').length - 1;
+    console.log('i: ', i);
+    if(i < rowNumber) {
+        lines[i] = s;
+        console.log('linia i', lines[i]);
+    } else {
+        lines.shift();
+        i--;
+        lines[i] = s;
+    }
+    for(j = 0; j <= i; j++) {
+        text += lines[j] + '\n';
+    }
+    console.log('textul e: ', text);
+    document.getElementById('textarea').innerHTML = text;
+}
+
+function isCombat() {
+    if(Math.floor(Math.random() * 100) + 1 < 30) {
+        return true;
+    }
+    return false;
+}
+
+function isShop() {
+    if(Math.floor(Math.random() * 100) + 1 <= 20) {
+        return true;
+    }
+    return false;
 }
 
 function showBag() {
