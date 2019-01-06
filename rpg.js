@@ -109,8 +109,11 @@ function getCharacterData() {
 
 function goToGame() {
     if(getCharacterData()) {
-        let createCharacter = document.getElementById('createCharacterDiv').style.display = 'none';
-        let createGame = document.getElementById('playDiv').style.display = 'block';
+        document.getElementById('createCharacterDiv').style.display = 'none';
+        document.getElementById('playDiv').style.display = 'block';
+        document.getElementById('resetButton').style.display = 'none';
+        document.getElementById('shopMenu').style.display = 'none';
+        document.getElementById('shop').style.display = 'none';
         document.getElementById('bag').style.display = 'none';
         let displayCharClass = document.getElementById('displayCharClass');
         displayCharClass.innerHTML = Character.characterClass.className;
@@ -133,7 +136,7 @@ function goToGame() {
         let displayCharDamage = document.getElementById('displayCharDamage');
         displayCharDamage.innerHTML = Character.damage;
         let displayCharGold = document.getElementById('displayCharGold');
-        displayCharGold.innerHTML = Character.gold  ;
+        displayCharGold.innerHTML = Character.gold;
         document.getElementById('textarea').innerHTML += 'Ai intrat intr-o padure.....\n';
     } else {
         alert('Name, class or race not set.');
@@ -162,6 +165,8 @@ function getRndInteger(min, max) {
 }
 
 function movement(direction) {
+    document.getElementById('shop').style.display = 'none';
+    document.getElementById('shopMenu').style.display = 'none';
     addToTextarea('You went ' + direction);
     if(isCombat()) {
         let enemy = Enemies[getRndInteger(0, 2)]
@@ -170,7 +175,77 @@ function movement(direction) {
     }
     if(isShop()) {
         addToTextarea('You found a shop.');
+        document.getElementById('shopMenu').style.removeProperty('display');
     }
+}
+
+function ifBuy() {
+    document.getElementById('shop').style.removeProperty('display');
+}
+
+function onBigHealthPotionClick() {
+    if(Character.gold >= 70) {
+        if(Character.currentHp + 50 < Character.maxHp) {
+            Character.currentHp += 50;
+        } else {
+            Character.currentHp = Character.maxHp;
+        }
+        Character.gold -= 70;
+        let displayCharCurrentHp = document.getElementById('displayCharCurrentHp');
+        displayCharCurrentHp.innerHTML = Character.currentHp;
+        let displayCharGold = document.getElementById('displayCharGold');
+        displayCharGold.innerHTML = Character.gold;
+    } else {
+        addToTextarea('Not enough gold.');
+    }
+}
+
+function onSmallHealthPotionClick() {
+    if(Character.gold >= 40) {
+        if(Character.currentHp + 25 < Character.maxHp) {
+            Character.currentHp += 25;
+        } else {
+            Character.currentHp = Character.maxHp;
+        }
+        Character.gold -= 40;
+        let displayCharCurrentHp = document.getElementById('displayCharCurrentHp');
+        displayCharCurrentHp.innerHTML = Character.currentHp;
+        let displayCharGold = document.getElementById('displayCharGold');
+        displayCharGold.innerHTML = Character.gold;
+    } else {
+        addToTextarea('Not enough gold.');
+    }
+}
+
+function onStrenghtPotionClick() {
+    if(Character.gold >= 150) {
+        Character.damage += 15;
+        Character.gold -= 150;
+        let displayCharDamage = document.getElementById('displayCharDamage');
+        displayCharDamage.innerHTML = Character.damage;
+        let displayCharGold = document.getElementById('displayCharGold');
+        displayCharGold.innerHTML = Character.gold;
+    } else {
+        addToTextarea('Not enough gold.');
+    }
+}
+
+function onArmourPotionClick() {
+    if(Character.gold >= 100) {
+        Character.armour += 5;
+        Character.gold -= 100;
+        let displayCharArmour = document.getElementById('displayCharArmour');
+        displayCharArmour.innerHTML = Character.armour;
+        let displayCharGold = document.getElementById('displayCharGold');
+        displayCharGold.innerHTML = Character.gold;
+    } else {
+        addToTextarea('Not enough gold.');
+    }
+}
+
+function ifSkipShop() {
+    document.getElementById('shop').style.display = 'none';
+    document.getElementById('shopMenu').style.display = 'none';
 }
 
 function combat(enemy) {
@@ -184,6 +259,13 @@ function combat(enemy) {
     }
     if(Character.currentHp <= 0) {
         addToTextarea('You died.');
+        refreshDisplay();
+        document.getElementById('northButton').style.display = 'none';
+        document.getElementById('southButton').style.display = 'none';
+        document.getElementById('westButton').style.display = 'none';
+        document.getElementById('eastButton').style.display = 'none';
+        document.getElementById('resetButton').style.removeProperty('display');
+
     } else if(enemy.hp <= 0) {
         Character.gold += enemy.valueInGold;
         if(Character.currentXp + enemy.valueInXp < Character.maxXp) {
@@ -206,6 +288,16 @@ function combat(enemy) {
         addToTextarea('You won the battle.');
     }
     enemy.hp = enemy.maxHp;
+}
+
+function onRestartGame() {
+    document.getElementById('createCharacterDiv').style.display = 'block';
+    document.getElementById('playDiv').style.display = 'none';
+    document.getElementById('textarea').innerHTML = '';
+    document.getElementById('northButton').style.removeProperty('display');
+    document.getElementById('southButton').style.removeProperty('display');
+    document.getElementById('westButton').style.removeProperty('display');
+    document.getElementById('eastButton').style.removeProperty('display');
 }
 
 function addToTextarea(s) {

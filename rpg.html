@@ -38,6 +38,8 @@
         <button class="movementButton" id="southButton" onclick="movement('south.')">South</button>
         <button class="movementButton" id="westButton" onclick="movement('west.')">West</button>
         <button class="movementButton" id="eastButton" onclick="movement('east.')">East</button>
+        <!-- Button reset joc -->
+        <button id="resetButton" onclick="onRestartGame()">Try again.</button>
         <!-- Pentru bag -->
         <button id="showhidebag" onclick="showBag()">Show bag</button>
         <table id="bag" class="bagTable">
@@ -86,10 +88,10 @@
                 <th colspan="5">Shop</th>
             </tr>
             <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td background="BigHealthPotion.jpg" onclick="onBigHealthPotionClick()"></td>
+                <td background="SmallHealthPotion.jpg" onclick="onSmallHealthPotionClick()"></td>
+                <td background="StrenghtPotion.jpg" onclick="onStrenghtPotionClick()"></td>
+                <td background="ArmourPotion.jpg" onclick="onArmourPotionClick()"></td>
                 <td></td>
             </tr>
             <tr>
@@ -122,11 +124,10 @@
             </tr>
         </table>
         <!-- Meniu shop -->
-        <div class="shopMenu">
+        <div class="shopMenu" id="shopMenu">
             <a href="#" class="active">Shop</a>
-            <a href="#">Buy</a>
-            <a href="#">Sell</a>
-            <a href="#">Skip</a>
+            <a href="#" onclick="ifBuy()">Buy</a>
+            <a href="#" onclick="ifSkipShop()">Skip</a>
           </div>
     </div>
 </div>

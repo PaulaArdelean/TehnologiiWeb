@@ -127,6 +127,14 @@ div {
     bottom: 7%;
 }
 
+#resetButton {
+    left: 50%;
+    bottom: 15%;
+    width: 80px;
+    height: 60px;
+    position: fixed;
+}
+
 #showhidebag {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 15;
