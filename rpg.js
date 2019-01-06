@@ -188,7 +188,8 @@ function combat(enemy) {
         Character.gold += enemy.valueInGold;
         if(Character.currentXp + enemy.valueInXp < Character.maxXp) {
             Character.currentXp += enemy.valueInXp;
-        } else { // BUG: se dubleaza maxXp inainte sa ajung la fostul maxXp
+        } else {
+            Character.currentXp = Character.currentXp + enemy.valueInXp - Character.maxXp;
             Character.level++;
             Character.maxXp *= 2;
             Character.damage += 5;
@@ -196,12 +197,10 @@ function combat(enemy) {
             Character.maxHp += 10;
             for(let nr = 0; nr <= 2; nr++) {
                 Enemies[nr].damage += 3;
-                Enemies[nr].hp += 5;
                 Enemies[nr].maxHp += 5;
                 Enemies[nr].valueInGold += 5;
                 Enemies[nr].valueInXp += 10;
             }
-            currentXp = Character.currentXp + enemy.valueInXp - Character.maxXp;
         }
         refreshDisplay();
         addToTextarea('You won the battle.');
