@@ -41,7 +41,7 @@
         <!-- Button reset joc -->
         <button id="resetButton" onclick="onRestartGame()">Try again.</button>
         <!-- Pentru bag -->
-        <button id="showhidebag" onclick="showBag()">Show bag</button>
+        <!-- <button id="showhidebag" onclick="showBag()">Show bag</button> -->
         <table id="bag" class="bagTable">
             <tr>
                 <th colspan="5">Gold: <span id="goldamount"></span></th>
@@ -88,10 +88,10 @@
                 <th colspan="5">Shop</th>
             </tr>
             <tr>
-                <td background="BigHealthPotion.jpg" onclick="onBigHealthPotionClick()"></td>
-                <td background="SmallHealthPotion.jpg" onclick="onSmallHealthPotionClick()"></td>
-                <td background="StrenghtPotion.jpg" onclick="onStrenghtPotionClick()"></td>
-                <td background="ArmourPotion.jpg" onclick="onArmourPotionClick()"></td>
+                <td background="BigHealthPotion.jpg" title="+50 current hp; gold: 70" onclick="onBigHealthPotionClick()"></td>
+                <td background="SmallHealthPotion.jpg" title="+25 current hp; gold: 40" onclick="onSmallHealthPotionClick()"></td>
+                <td background="StrenghtPotion.jpg" title="+15 strenght; gold: 150" onclick="onStrenghtPotionClick()"></td>
+                <td background="ArmourPotion.jpg" title="+5 armour; gold: 100" onclick="onArmourPotionClick()"></td>
                 <td></td>
             </tr>
             <tr>

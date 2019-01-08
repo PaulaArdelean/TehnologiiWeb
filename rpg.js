@@ -137,7 +137,7 @@ function goToGame() {
         displayCharDamage.innerHTML = Character.damage;
         let displayCharGold = document.getElementById('displayCharGold');
         displayCharGold.innerHTML = Character.gold;
-        document.getElementById('textarea').innerHTML += 'Ai intrat intr-o padure.....\n';
+        document.getElementById('textarea').innerHTML += 'You wake up in a dark forest...\n';
     } else {
         alert('Name, class or race not set.');
     }
